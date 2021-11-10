@@ -73,7 +73,7 @@ int ClearPort(MM::Device& device, MM::Core& core, std::string port)
 QWLED::QWLED() :
 	port_("undefined"),
 	initialized_(false),
-	duration(10),
+	duration(0),
 	m_constCurrent{ 0,0,0,0 },
 	nowtime(clock()),
 	sendtime(clock())
