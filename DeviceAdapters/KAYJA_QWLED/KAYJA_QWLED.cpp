@@ -255,9 +255,6 @@ int QWLED::OnConstantCurrent(MM::PropertyBase* pProp, MM::ActionType eAct, long 
 		std::istringstream iss(answer);//用answer新建一个istringstream对象iss
 		iss >> m_constCurrent[index];//把iss的值（即answer）赋值给m_constCurrent[index]，注意这里的值是QWLED01.h头文件定义的，Micro-Manager并不知道m_constCurrent[index]
 		pProp->Set(m_constCurrent[index]);//Micro-Manager同步记录恒定电流值
-		//MM::PropertyBase *pp = pProp;
-		//pp += index;
-		//pp->Set(m_constCurrent[index]);
 	}
 	else if (eAct == MM::AfterSet)
 	{
