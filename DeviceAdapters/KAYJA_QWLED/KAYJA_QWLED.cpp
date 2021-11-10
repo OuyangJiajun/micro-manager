@@ -244,10 +244,10 @@ int QWLED::OnConstantCurrent(MM::PropertyBase* pProp, MM::ActionType eAct, long 
 	{
 		command << "@AR0" << index + 1;
 		nowtime=clock();//记录当前CPU计时单元
-		duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
+		duration = (nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
 		while(duration< 0.03){//间隔小于1ms就不发
 			nowtime = clock();
-			duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;
+			duration = (nowtime - sendtime) / CLOCKS_PER_SEC;
 		}
 		ret = SendSerialCommand(port_.c_str(), command.str().c_str(), "\n");//通过串口发送指令
 		sendtime=clock();//有发送就记录最新的CPU计时单元
@@ -275,10 +275,10 @@ int QWLED::OnConstantCurrent(MM::PropertyBase* pProp, MM::ActionType eAct, long 
 		command << "@AW0" << index + 1 << str;
 		// send command
 		nowtime = clock();//记录当前CPU计时单元
-		duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
+		duration = (nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
 		while (duration < 0.03) {//间隔小于1ms就不发
 			nowtime = clock();
-			duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;
+			duration = (nowtime - sendtime) / CLOCKS_PER_SEC;
 		}
 		ret = SendSerialCommand(port_.c_str(), command.str().c_str(), "\n");
 		sendtime = clock();//有发送就记录最新的CPU计时单元
@@ -314,10 +314,10 @@ int QWLED::OnSingleLedOnoff(MM::PropertyBase* pProp, MM::ActionType eAct, long i
 		command << "@AE0" << index + 1 << a;
 		// send command
 		nowtime = clock();//记录当前CPU计时单元
-		duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
+		duration = (nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
 		while (duration < 0.03) {//间隔小于1ms就不发
 			nowtime = clock();
-			duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;
+			duration = (nowtime - sendtime) / CLOCKS_PER_SEC;
 		}
 		ret = SendSerialCommand(port_.c_str(), command.str().c_str(), "\n");
 		sendtime = clock();//有发送就记录最新的CPU计时单元
