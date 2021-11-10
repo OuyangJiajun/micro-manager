@@ -464,6 +464,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PrizmatixDevice", "DeviceAd
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UniversalSerialHub", "DeviceAdapters\UniversalSerialHub\UniversalSerialHub.vcxproj", "{870B45D3-5EA6-47C3-9A86-3372CE0A0436}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KAYJA_QWLED", "DeviceAdapters\KAYJA_QWLED\KAYJA_QWLED.vcxproj", "{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -3196,6 +3198,18 @@ Global
 		{870B45D3-5EA6-47C3-9A86-3372CE0A0436}.Release|Win32.Build.0 = Release|Win32
 		{870B45D3-5EA6-47C3-9A86-3372CE0A0436}.Release|x64.ActiveCfg = Release|x64
 		{870B45D3-5EA6-47C3-9A86-3372CE0A0436}.Release|x64.Build.0 = Release|x64
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Debug|Mixed Platforms.Build.0 = Debug|x64
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Debug|Win32.Build.0 = Debug|Win32
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Debug|x64.ActiveCfg = Debug|x64
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Debug|x64.Build.0 = Debug|x64
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Release|Win32.ActiveCfg = Release|Win32
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Release|Win32.Build.0 = Release|Win32
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Release|x64.ActiveCfg = Release|x64
+		{1DB23192-3BEE-497F-9FF2-6CFA8298B6AA}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
