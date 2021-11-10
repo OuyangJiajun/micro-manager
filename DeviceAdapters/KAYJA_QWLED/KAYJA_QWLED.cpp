@@ -67,9 +67,16 @@ int ClearPort(MM::Device& device, MM::Core& core, std::string port)
    return DEVICE_OK;                                                           
 } 
 
+/**
+* Constructor.
+*/
 QWLED::QWLED() :
-   port_("undefined"),
-   initialized_(false)
+	port_("undefined"),
+	initialized_(false),
+	duration(10),
+	m_constCurrent{ 0,0,0,0 },
+	nowtime(clock()),
+	sendtime(clock())
 {
    InitializeDefaultErrorMessages();
    SetErrorText(ERR_PORT_CHANGE_FORBIDDEN, "You can't change the port after device has been initialized.");
@@ -104,7 +111,7 @@ QWLED::~QWLED()
 int QWLED::Initialize()
 {
 	ostringstream command;
-	int i, nRet;
+	int nRet;
 	std::ostringstream os1;
 
 	if (initialized_)
