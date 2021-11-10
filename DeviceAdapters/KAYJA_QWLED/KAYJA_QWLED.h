@@ -61,6 +61,6 @@ private:
 	long m_constCurrent[NUM_LEDS];
 	std::string m_SingleLedOnoff[NUM_LEDS];
 	clock_t sendtime, nowtime;
-	clock_t duration;
+	double duration;
 };
 #endif
