@@ -15,12 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AAAOTF.cpp">
+    <ClCompile Include="KAYJA_QWLED.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AAAOTF.h">
+    <ClInclude Include="KAYJA_QWLED.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
