@@ -4,8 +4,8 @@
 // SUBSYSTEM:     DeviceAdapters
 //-----------------------------------------------------------------------------
 // DESCRIPTION:   KAYJA QWLED
-// NOTICE:        Update micro-manager and install rs232 driver
-// AUTHOR:        Ouyang Jiajun 09/11/2021
+// NOTICE:        Please update micro-manager and install rs232 driver. Set the BaudRate:115200 when adding device.
+// AUTHOR:        Ouyang Jiajun, Tan Handong. 11/11/2021
 //
 
 #ifdef WIN32

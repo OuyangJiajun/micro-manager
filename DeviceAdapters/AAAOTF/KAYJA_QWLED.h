@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 // DESCRIPTION:   KAYJA QWLED
 //
-// AUTHOR:        Ouyang Jiajun 09/11/2021
+// AUTHOR:        Ouyang Jiajun，Tan Handong. 11/11/2021
 
 #pragma once
 
