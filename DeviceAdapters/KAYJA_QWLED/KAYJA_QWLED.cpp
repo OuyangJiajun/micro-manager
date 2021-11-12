@@ -79,6 +79,7 @@ QWLED::QWLED() :
    SetErrorText(ERR_PORT_CHANGE_FORBIDDEN, "You can't change the port after device has been initialized.");
    SetErrorText(ERR_ONOFF_CONTROL_FAIL, "Fail to control leds on/off.");
    SetErrorText(ERR_READ_CURRENT_FAIL, "Fail to read current.");
+   SetErrorText(ERR_SET_CURRENT_FAIL, "Fail to set current.");
 	
    for (int i = 0; i < NUM_LEDS; i++)
    {
@@ -270,7 +271,7 @@ int QWLED::OnConstantCurrent(MM::PropertyBase* pProp, MM::ActionType eAct, long 
 		if (ret != DEVICE_OK) return ret;
 		if (answer == "@ERR")
 		{
-			return ERR_READ_CURRENT_FAIL;
+			return ERR_SET_CURRENT_FAIL;
 		}
 	}
 
@@ -308,7 +309,7 @@ int QWLED::OnSingleLedOnoff(MM::PropertyBase* pProp, MM::ActionType eAct, long i
 		if (ret != DEVICE_OK) return ret;
 		if (answer == "@ERR")
 		{
-			return ERR_READ_CURRENT_FAIL;
+			return ERR_ONOFF_CONTROL_FAIL;
 		}
 	}
 

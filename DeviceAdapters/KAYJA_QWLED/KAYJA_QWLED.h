@@ -23,6 +23,7 @@
 #define ERR_PORT_CHANGE_FORBIDDEN	101
 #define ERR_ONOFF_CONTROL_FAIL		102
 #define ERR_READ_CURRENT_FAIL		103
+#define ERR_SET_CURRENT_FAIL        104
 
 class QWLED : public CShutterBase<QWLED>
 {
