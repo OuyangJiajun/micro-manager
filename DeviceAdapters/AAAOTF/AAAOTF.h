@@ -11,33 +11,17 @@
 #ifndef _AOTF_H_
 #define _AOTF_H_
 
-#include "MMDevice.h"
-#include "DeviceBase.h"
+#include "../../MMDevice/MMDevice.h"
+#include "../../MMDevice/DeviceBase.h"
 #include <string>
 #include <map>
 
+
 //////////////////////////////////////////////////////////////////////////////
 // Error codes
-//
-#define ERR_UNKNOWN_POSITION         10002
-#define ERR_PORT_CHANGE_FORBIDDEN    10004
-#define ERR_SET_POSITION_FAILED      10005
-#define ERR_INVALID_STEP_SIZE        10006
-#define ERR_INVALID_MODE             10008
-#define ERR_UNRECOGNIZED_ANSWER      10009
-#define ERR_UNSPECIFIED_ERROR        10010
-#define ERR_COMMAND_ERROR            10201
-#define ERR_PARAMETER_ERROR          10202
-#define ERR_RECEIVE_BUFFER_OVERFLOW  10204
-#define ERR_COMMAND_OVERFLOW         10206
-#define ERR_PROCESSING_INHIBIT       10207
-#define ERR_PROCESSING_STOP_ERROR    10208
-
-#define ERR_OFFSET 10100
-#define ERR_AOTF_OFFSET 10200
-#define ERR_INTENSILIGHTSHUTTER_OFFSET 10300
-
-
+#define ERR_PORT_CHANGE_FORBIDDEN	101
+#define ERR_ONOFF_CONTROL_FAIL		102
+#define ERR_READ_CURRENT_FAIL		103
 
 class AOTF : public CShutterBase<AOTF>
 {
@@ -57,22 +41,29 @@ public:
    // ---------
    int SetOpen(bool open);
    int GetOpen(bool& open);
-   int Fire(double /*interval*/) {return DEVICE_UNSUPPORTED_COMMAND; }
+   int Fire(double /*interval*/) {return DEVICE_UNSUPPORTED_COMMAND; }//这个作用上来讲可以去掉，直接分号
 
 
    // action interface
-   // ----------------
    int OnPort(MM::PropertyBase* pProp, MM::ActionType eAct);
+   /*下面这些被我注释掉
    int OnState(MM::PropertyBase* pProp, MM::ActionType eAct);
    int OnChannel(MM::PropertyBase* pProp, MM::ActionType eAct);
    int OnIntensity(MM::PropertyBase* pProp, MM::ActionType eAct);
    int OnMaxintensity(MM::PropertyBase* pProp, MM::ActionType eAct);
-   //int OnVersion(MM::PropertyBase* pProp, MM::ActionType eAct);
+   int OnVersion(MM::PropertyBase* pProp, MM::ActionType eAct);
+   */
+   //下面这个由索雷博的来，用于查询恒定电流
+   int OnConstantCurrent(MM::PropertyBase* pProp, MM::ActionType eAct, long index);
 
 private:
 
+   int LEDOnOff(int);
+	bool dynErrlist_free		(void);
+	bool dynErrlist_lookup	(int err, std::string* descr);
+	bool dynErrlist_add		(int err, std::string descr);
+   /*
    int SetIntensity(double intensity);
-	
    int SetShutterPosition(bool state);
    //int GetVersion();
 
@@ -88,57 +79,16 @@ private:
    //intensity
    double intensity_;
    int maxintensity_; 
-   
-};
+   */
 
-class multiAOTF : public CShutterBase<multiAOTF>
-{
-public:
-   multiAOTF();
-   ~multiAOTF();
-  
-   // Device API
-   // ----------
-   int Initialize();
-   int Shutdown();
-  
-   void GetName(char* pszName) const;
-   bool Busy();
-
-   // Shutter API
-   // ---------
-   int SetOpen(bool open);
-   int GetOpen(bool& open);
-   int Fire(double /*interval*/) {return DEVICE_UNSUPPORTED_COMMAND; }
-
-
-   // action interface
-   // ----------------
-   int OnPort(MM::PropertyBase* pProp, MM::ActionType eAct);
-   int OnState(MM::PropertyBase* pProp, MM::ActionType eAct);
-   int OnChannel(MM::PropertyBase* pProp, MM::ActionType eAct);
-   //int OnIntensity(MM::PropertyBase* pProp, MM::ActionType eAct);
-   //int OnVersion(MM::PropertyBase* pProp, MM::ActionType eAct);
-   int OnDelayBetweenChannels(MM::PropertyBase* pProp, MM::ActionType eAct);
-
-private:
-
-   //int SetIntensity(int intensity);
-	
-   int SetShutterPosition(bool state);
-   //int GetVersion();
-
-   // MMCore name of serial port
-   std::string port_;
-   // Command exchange with MMCore                                           
-   std::string command_;           
-   // close (0) or open (1)
-   int state_;
-   bool initialized_;
-   // channels that we are currently working on 
-   int activeMultiChannels_;
-   // milliseconds to wait between the per-channel on/off commands
-   double delayBetweenChannels_;
+   static int const NUM_LEDS = 4;
+	const char* m_devName;
+	std::string 	m_port;
+	std::string 	m_LEDOn;
+	long 				m_constCurrent[NUM_LEDS];//设置各通道恒定电流
+	bool 				m_initialized;
+   // dynamic error list
+	std::vector<DynError*>	m_dynErrlist;
 };
 
 #endif //_AOTF_H_
