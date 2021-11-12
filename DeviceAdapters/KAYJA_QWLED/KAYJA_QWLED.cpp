@@ -4,7 +4,7 @@
 // SUBSYSTEM:     DeviceAdapters
 //-----------------------------------------------------------------------------
 // DESCRIPTION:   KAYJA QWLED
-//                
+// NOTICE:        Update micro-manager and install rs232 driver
 // AUTHOR:        Ouyang Jiajun 09/11/2021
 //
 
@@ -73,10 +73,7 @@ int ClearPort(MM::Device& device, MM::Core& core, std::string port)
 QWLED::QWLED() :
 	port_("undefined"),
 	initialized_(false),
-	duration(0),
-	m_constCurrent{ 0,0,0,0 },
-	nowtime(clock()),
-	sendtime(clock())
+	m_constCurrent{ 0,0,0,0 }
 {
    InitializeDefaultErrorMessages();
    SetErrorText(ERR_PORT_CHANGE_FORBIDDEN, "You can't change the port after device has been initialized.");
@@ -98,7 +95,7 @@ QWLED::QWLED() :
    // Description                                                            
    CreateProperty(MM::g_Keyword_Description, "KAYJA QWLED01", MM::String, true);
                                                                              
-   // Port，原来是undifined，添加设备时会报错找不到设备，需要改为对应的COM，但是不会C++的人怎么使用呢？                                                                   
+   // Port                                                               
    CPropertyAction* pAct = new CPropertyAction (this, &QWLED::OnPort);      
    CreateProperty(MM::g_Keyword_Port, "undefined", MM::String, false, pAct, true);  
 }                                                                            
@@ -243,16 +240,9 @@ int QWLED::OnConstantCurrent(MM::PropertyBase* pProp, MM::ActionType eAct, long 
 	if (eAct == MM::BeforeGet)
 	{
 		command << "@AR0" << index + 1;
-		nowtime=clock();//记录当前CPU计时单元
-		duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
-		while(duration< 0.03){//间隔小于1ms就不发
-			nowtime = clock();
-			duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;
-		}
-		ret = SendSerialCommand(port_.c_str(), command.str().c_str(), "\n");//通过串口发送指令
-		sendtime=clock();//有发送就记录最新的CPU计时单元
+		ret = SendSerialCommand(port_.c_str(), command.str().c_str(), "\n");
 		if (ret != DEVICE_OK) return ret;
-		ret = GetSerialAnswer(port_.c_str(), "\n", answer);//接收返回信息："@AAAA"或"@ERR"
+		ret = GetSerialAnswer(port_.c_str(), "\n@OK\n", answer);//接收返回信息："@AAAA"或"@ERR"
 		if (ret != DEVICE_OK) return ret;
 		if (answer == "@ERR")
 		{
@@ -274,15 +264,14 @@ int QWLED::OnConstantCurrent(MM::PropertyBase* pProp, MM::ActionType eAct, long 
 		ss >> str;         //将字符流传给 str
 		command << "@AW0" << index + 1 << str;
 		// send command
-		nowtime = clock();//记录当前CPU计时单元
-		duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
-		while (duration < 0.03) {//间隔小于1ms就不发
-			nowtime = clock();
-			duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;
-		}
 		ret = SendSerialCommand(port_.c_str(), command.str().c_str(), "\n");
-		sendtime = clock();//有发送就记录最新的CPU计时单元
 		if (ret != DEVICE_OK) return ret;
+		ret = GetSerialAnswer(port_.c_str(), "\n", answer);//接收返回信息："@OK"或"@ERR"
+		if (ret != DEVICE_OK) return ret;
+		if (answer == "@ERR")
+		{
+			return ERR_READ_CURRENT_FAIL;
+		}
 	}
 
 	return ret;
@@ -313,15 +302,14 @@ int QWLED::OnSingleLedOnoff(MM::PropertyBase* pProp, MM::ActionType eAct, long i
 			a = 'F';
 		command << "@AE0" << index + 1 << a;
 		// send command
-		nowtime = clock();//记录当前CPU计时单元
-		duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;//计算距离上一次发送过了多久
-		while (duration < 0.03) {//间隔小于1ms就不发
-			nowtime = clock();
-			duration = (double)(nowtime - sendtime) / CLOCKS_PER_SEC;
-		}
 		ret = SendSerialCommand(port_.c_str(), command.str().c_str(), "\n");
-		sendtime = clock();//有发送就记录最新的CPU计时单元
 		if (ret != DEVICE_OK) return ret;
+		ret = GetSerialAnswer(port_.c_str(), "\n", answer);//接收返回信息："@OK"或"@ERR"
+		if (ret != DEVICE_OK) return ret;
+		if (answer == "@ERR")
+		{
+			return ERR_READ_CURRENT_FAIL;
+		}
 	}
 
 	return ret;

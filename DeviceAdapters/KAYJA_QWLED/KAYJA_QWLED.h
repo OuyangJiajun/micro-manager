@@ -60,7 +60,5 @@ private:
 	static int const NUM_LEDS = 4;
 	long m_constCurrent[NUM_LEDS];
 	std::string m_SingleLedOnoff[NUM_LEDS];
-	clock_t sendtime, nowtime;
-	double duration;
 };
 #endif
